@@ -1,0 +1,122 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAI 심화 분석 리포트 — 16조</title>
+<style>
+:root{--royal:#1D4ED8;--deep:#1E3A8A;--cobalt:#2563EB;--ice:#DBEAFE;--ice2:#EFF4FE;--ink:#1F2933;--muted:#6B7280;--line:#E6EAF2;--red:#DC2626;--bg:#F7F9FC;--white:#fff;--tint:#F6F9FE}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:30px 24px 64px}
+header{margin-bottom:26px}
+.badge{display:inline-block;background:var(--ice);color:var(--royal);font-size:12px;font-weight:800;letter-spacing:1.5px;padding:5px 12px;border-radius:20px;margin-bottom:12px}
+h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.sub{color:var(--muted);font-size:14.5px;margin-top:7px}
+.sec{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-top:18px}
+.sec h2{font-size:12.5px;font-weight:800;color:var(--royal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.sec .t{font-size:19px;font-weight:800;margin-bottom:14px;letter-spacing:-.3px}
+.sec p{font-size:14px;color:var(--ink);margin:6px 0}
+.mut{color:var(--muted);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 4px}
+.kpi{background:var(--tint);border:1px solid var(--line);border-radius:13px;padding:15px 17px}
+.kpi .n{font-size:24px;font-weight:800;color:var(--royal)}
+.kpi .n.red{color:var(--red)}
+.kpi .l{font-size:12px;color:var(--muted);margin-top:3px}
+.cf{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:14px 0 6px}
+.cfbar{flex:1;min-width:280px}
+.row{display:flex;align-items:center;gap:12px;margin:11px 0}
+.row .lab{width:150px;font-size:13px;font-weight:600}
+.row .track{flex:1;background:var(--ice2);border-radius:9px;height:26px;position:relative;overflow:hidden}
+.row .fill{height:100%;border-radius:9px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-size:12.5px;font-weight:800}
+.f-before{background:linear-gradient(90deg,#F19E9E,var(--red))}
+.f-after{background:linear-gradient(90deg,#7FA8F5,var(--royal))}
+.delta{display:inline-block;background:#ECFDF5;color:#047857;font-weight:800;font-size:13px;padding:4px 12px;border-radius:20px}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+tr.hi td{background:var(--ice2)}
+.rank{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.rrow{display:flex;align-items:center;gap:12px}
+.rrow .rn{width:150px;font-size:13px;font-weight:600}
+.rrow .rt{flex:1;background:var(--ice2);border-radius:7px;height:16px;overflow:hidden}
+.rrow .rf{height:100%;background:linear-gradient(90deg,var(--cobalt),var(--royal));border-radius:7px}
+.rrow .rv{width:52px;text-align:right;font-size:12.5px;font-weight:700;color:var(--royal)}
+.note{background:var(--ice2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink);margin-top:14px}
+.note b{color:var(--deep)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.foot{color:var(--muted);font-size:12px;margin-top:28px;text-align:center;line-height:1.6}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<span class="badge">추가자료 · XAI 심화 분석 리포트</span>
+<h1>예측을 넘어 — 반사실·ROI로 검증한 리텐션 실현성</h1>
+<div class="sub">발표자료의 핵심 논리를 뒷받침하는 정량 근거입니다. 모든 수치는 제출 코드(<b>분석코드_전체.py</b>)가 그대로 재현합니다. · 16조</div>
+</header>
+
+<div class="sec">
+<h2>Summary · 한눈에</h2>
+<div class="t">진단(XAI) → 개입(전략)의 효과를 숫자로 증명했습니다</div>
+<div class="kpis">
+ <div class="kpi"><div class="n">0.7312</div><div class="l">CV PR-AUC (ROC 0.8895)</div></div>
+ <div class="kpi"><div class="n red">−26%p</div><div class="l">비활성 고위험군 활성화 시 이탈확률 ↓</div></div>
+ <div class="kpi"><div class="n">59%</div><div class="l">상위 20% 접촉 시 이탈자 포착</div></div>
+ <div class="kpi"><div class="n">3</div><div class="l">요인이 다른 고위험 유형·처방</div></div>
+</div>
+<p class="mut">아래 3가지 분석은 “XAI가 짚은 요인이 실제 개입으로 이어질 때 얼마나 효과적인가”를 정량화하여, 비즈니스 솔루션의 <b>연결성·실현성</b>을 뒷받침합니다.</p>
+</div>
+
+<div class="sec">
+<h2>Analysis 1 · 반사실 분석 (Counterfactual)</h2>
+<div class="t">“활성화하면 이탈확률이 얼마나 내려가는가” — 재활성화 전략의 근거</div>
+<p>XAI가 이탈 요인으로 짚은 <b>‘비활성’</b>을 실제로 뒤집어(IsActiveMember 0→1) 모델이 예측을 어떻게 바꾸는지 측정했습니다. 이는 “② 비활성 중장년 → 재활성화” 전략이 <b>왜</b> 유효한지에 대한 정량 근거입니다.</p>
+<div class="cf"><div class="cfbar">
+ <div class="row"><div class="lab">비활성 고령 고객(②)</div><div class="track"><div class="fill f-before" style="width:94%">활성화 전 94.6%</div></div></div>
+ <div class="row"><div class="lab">└ 활성화 가정 시</div><div class="track"><div class="fill f-after" style="width:71%">71.5%</div></div></div>
+ <div class="row"><div class="lab">비활성·고위험 3,989명(평균)</div><div class="track"><div class="fill f-before" style="width:77%">76.7%</div></div></div>
+ <div class="row"><div class="lab">└ 활성화 가정 시</div><div class="track"><div class="fill f-after" style="width:51%">50.7%</div></div></div>
+</div></div>
+<p><span class="delta">개인 −23.1%p · 세그먼트 평균 −26.0%p</span></p>
+<div class="note"><b>해석·한계</b> · 재활성화 유도(자동이체·거래 재개)가 이 세그먼트의 이탈위험을 크게 낮출 여지를 보여줍니다. 단, 이는 <b>모델의 반응</b>이며 인과 증명이 아니므로, 실제 캠페인에서는 <b>A/B 테스트</b>로 효과를 검증해야 합니다.</p>
+</div>
+
+<div class="sec">
+<h2>Analysis 2 · 리텐션 ROI / 타겟팅 시뮬레이션</h2>
+<div class="t">전 고객 살포 대신, 위험 상위 20%만 접촉해도 이탈자 대부분을 포착</div>
+<p class="mut">위험도(세그먼트 실이탈률) 순으로 정렬해 상위 K%만 접촉했을 때의 이탈자 포착률과 기대 순이익입니다.
+가정 — 접촉당 비용 <b>3,000원</b> · 이탈 방어 성공 시 고객가치 <b>300,000원</b> · 캠페인 성공률 <b>30%</b>.</p>
+<table>
+<thead><tr><th>접촉 범위</th><th class="n">포착 이탈자</th><th class="n">기대 방어 고객</th><th class="n">기대 순이익(가정)</th></tr></thead>
+<tbody>
+<tr><td>위험 상위 10%</td><td class="n">37.4%</td><td class="n">78명</td><td class="n">+1,361만원</td></tr>
+<tr class="hi"><td>위험 상위 20% <span class="mut">(권장)</span></td><td class="n">59.2%</td><td class="n">248명</td><td class="n">+5,465만원</td></tr>
+<tr><td>위험 상위 30%</td><td class="n">74.9%</td><td class="n">471명</td><td class="n">+1억 1,156만원</td></tr>
+</tbody></table>
+<div class="note">상위 20% 접촉으로 <b>마케팅 예산을 1/5로 줄이면서 이탈자의 약 60%를 방어</b>합니다. 이탈확률·고객가치·비용을 함께 반영한 <b>우선순위 큐</b>로 운영하면 예산 대비 효과를 극대화할 수 있습니다.</div>
+</div>
+
+<div class="two">
+<div class="sec">
+<h2>Analysis 3 · 외부 데이터 활용의 적절성</h2>
+<div class="t">무리한 결합 대신 내부 구조 규명</div>
+<p class="mut">검토 후보 — 국가별 기준금리·소비자물가(CPI)·실업률 등 거시지표, Churn_Modelling 원본.</p>
+<p><b>판단</b> · 본 데이터는 합성(synthetic)으로 실제 고객·기간 식별키가 없어 거시지표를 시점/지역으로 정합 결합할 근거가 약하고, 원본 병합은 <b>평가셋 누수 위험</b>이 있습니다.</p>
+<p><b>결론</b> · 외부 결합을 강행하기보다 ‘잔고 역설 = 국가(독일) 교란’처럼 <b>데이터 내부 구조를 규명</b>하는 데 집중했습니다. 실데이터 적용 시 국가별 금리·경기지표를 시점 결합하면 설명력 향상 여지가 큽니다.</p>
+</div>
+<div class="sec">
+<h2>Model Check · 전역 SHAP 견고성</h2>
+<div class="t">모델이 본 규칙 = EDA 결론</div>
+<p class="mut">전체 고객 평균 |SHAP| 영향력 순위(실측). 파생변수 ‘상품수 구간’이 1순위로, EDA의 ‘상품 3개↑ 절벽’과 정확히 일치합니다.</p>
+<div class="rank" id="rank"></div>
+</div>
+</div>
+
+<div class="foot">
+모델: CatBoost·LightGBM·XGBoost 3모델 앙상블 (CV PR-AUC 0.7312 · ROC-AUC 0.8895) · 설명: SHAP · 반사실/ROI는 제출 코드로 재현<br>
+2026 신촌연합 데이터·AI 해커톤 · 16조 — 이 리포트는 팀 분석 결과로 생성된 자체 완결형 추가자료입니다.
+</div>
+</div>
+<script>
+const RANK=[["상품수 구간",0.67],["나이",0.57],["활성×상품",0.30],["활성 회원",0.25],["성별",0.24],["상품 수",0.24],["국가",0.23],["잔고",0.19]];
+const mx=Math.max(...RANK.map(r=>r[1]));
+document.getElementById("rank").innerHTML=RANK.map(r=>`<div class="rrow"><div class="rn">${r[0]}</div><div class="rt"><div class="rf" style="width:${r[1]/mx*100}%"></div></div><div class="rv">${r[1].toFixed(2)}</div></div>`).join("");
+</script>
+</body></html>

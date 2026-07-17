@@ -1,112 +1,67 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>은행 고객 이탈 리텐션 대시보드</title>
+<title>2026 신촌연합 데이터·AI 해커톤 — 16조 제출자료</title>
 <style>
-:root{--royal:#1D4ED8;--cobalt:#2563EB;--ice:#DBEAFE;--ice2:#EFF4FE;--ink:#1F2933;--muted:#6B7280;--line:#E6EAF2;--red:#DC2626;--bg:#F7F9FC;--white:#fff}
+:root{--royal:#1D4ED8;--deep:#1E3A8A;--cobalt:#2563EB;--ice:#DBEAFE;--ice2:#EFF4FE;--ink:#1F2933;--muted:#6B7280;--line:#E6EAF2;--bg:#F7F9FC;--white:#fff;--tint:#F6F9FE}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
-.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 60px}
-header{margin-bottom:22px}
-.badge{display:inline-block;background:var(--ice);color:var(--royal);font-size:12px;font-weight:700;letter-spacing:1px;padding:5px 11px;border-radius:20px;margin-bottom:12px}
-h1{font-size:27px;font-weight:800;letter-spacing:-.5px}
-.sub{color:var(--muted);font-size:14.5px;margin-top:6px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
-.kpi{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
-.kpi .n{font-size:28px;font-weight:800;color:var(--royal)}
-.kpi .l{font-size:12.5px;color:var(--muted);margin-top:4px}
-.kpi.alt .n{color:var(--cobalt)}
-.section-t{font-size:13px;font-weight:700;color:var(--royal);letter-spacing:2px;text-transform:uppercase;margin:26px 0 12px}
-.seg{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:8px}
-.segrow{display:flex;align-items:center;gap:12px;margin:9px 0}
-.segrow .lab{width:78px;font-size:13px;font-weight:600}
-.segrow .bar{flex:1;background:var(--ice2);border-radius:8px;height:16px;overflow:hidden}
-.segrow .fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--cobalt),var(--royal))}
-.segrow .v{width:44px;text-align:right;font-size:13px;font-weight:700;color:var(--royal)}
-.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;margin-top:14px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.chip{border:1px solid var(--line);background:var(--white);color:var(--muted);font-size:13px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;transition:.15s}
-.chip:hover{border-color:var(--cobalt);color:var(--cobalt)}
-.chip.on{background:var(--royal);border-color:var(--royal);color:#fff}
-.list{display:flex;flex-direction:column;gap:9px;max-height:640px;overflow-y:auto;padding-right:4px}
-.cust{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:13px 15px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
-.cust:hover{border-color:var(--cobalt);box-shadow:0 3px 12px rgba(37,99,235,.10)}
-.cust.on{border-color:var(--royal);box-shadow:0 3px 14px rgba(29,78,216,.18)}
-.cust .idc{font-weight:700;font-size:14px;min-width:66px}
-.cust .tag{font-size:11.5px;font-weight:700;color:var(--royal);background:var(--ice);padding:3px 9px;border-radius:12px;white-space:nowrap}
-.cust .meta{flex:1;font-size:12px;color:var(--muted)}
-.cust .risk{font-weight:800;font-size:15px;color:var(--red)}
-.panel{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:22px;position:sticky;top:18px;align-self:start}
-.panel h3{font-size:16px;font-weight:800;margin-bottom:2px}
-.ptag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--royal);padding:3px 11px;border-radius:12px;margin-bottom:14px}
-.attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.attr{background:var(--ice2);border-radius:10px;padding:9px 11px}
-.attr .k{font-size:11px;color:var(--muted)}
-.attr .v{font-size:14px;font-weight:700;margin-top:2px}
-.blk{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:16px 0 8px}
-.shap .r{display:flex;align-items:center;gap:10px;margin:6px 0}
-.shap .f{width:88px;font-size:12.5px;font-weight:600;text-align:right}
-.shap .track{flex:1;height:14px;background:var(--ice2);border-radius:7px;position:relative;overflow:hidden}
-.shap .pos{position:absolute;left:50%;height:100%;background:var(--red);border-radius:0 7px 7px 0}
-.shap .neg{position:absolute;right:50%;height:100%;background:var(--cobalt);border-radius:7px 0 0 7px}
-.shap .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c3ccdb}
-.strat{background:var(--ice);border-radius:12px;padding:14px 16px;font-size:13.5px;font-weight:600;color:var(--royal)}
-.mail{background:#0F1B3D;color:#e7edfb;border-radius:12px;padding:16px 18px;font-size:12.5px;white-space:pre-wrap;line-height:1.6;margin-top:8px}
-.mail b{color:#9CC0FF}
-.foot{color:var(--muted);font-size:12px;margin-top:26px;text-align:center}
-@media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.panel{position:static}}
+body{font-family:system-ui,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+.wrap{max-width:940px;margin:0 auto;padding:56px 24px 64px}
+header{margin-bottom:30px}
+.badge{display:inline-block;background:var(--ice);color:var(--royal);font-size:12px;font-weight:800;letter-spacing:1.5px;padding:6px 13px;border-radius:20px;margin-bottom:14px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.6px;text-wrap:balance}
+.sub{color:var(--muted);font-size:15px;margin-top:9px;max-width:60ch}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 4px}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:15px 16px}
+.kpi .n{font-size:22px;font-weight:800;color:var(--royal);font-variant-numeric:tabular-nums}
+.kpi .l{font-size:11.5px;color:var(--muted);margin-top:3px}
+.section-t{font-size:12.5px;font-weight:800;color:var(--royal);letter-spacing:1.5px;text-transform:uppercase;margin:34px 0 14px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:26px 26px 22px;text-decoration:none;color:inherit;transition:.18s;position:relative}
+.card:hover{border-color:var(--cobalt);box-shadow:0 8px 28px rgba(37,99,235,.14);transform:translateY(-2px)}
+.card .ic{width:46px;height:46px;border-radius:12px;background:var(--ice);color:var(--royal);display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:16px}
+.card .kind{font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--cobalt)}
+.card h3{font-size:19px;font-weight:800;margin:5px 0 8px;letter-spacing:-.3px}
+.card p{font-size:13.5px;color:var(--muted);flex:1}
+.card .go{margin-top:16px;font-size:13.5px;font-weight:800;color:var(--royal);display:flex;align-items:center;gap:6px}
+.card .go .arr{transition:.18s}
+.card:hover .go .arr{transform:translateX(4px)}
+.foot{color:var(--muted);font-size:12.5px;margin-top:36px;text-align:center;line-height:1.7;border-top:1px solid var(--line);padding-top:22px}
+.foot a{color:var(--cobalt);text-decoration:none;font-weight:600}
+.foot a:hover{text-decoration:underline}
+@media(max-width:720px){.wrap{padding:40px 20px 52px}.kpis{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}h1{font-size:25px}}
 </style></head><body><div class="wrap">
 <header>
-<span class="badge">추가자료 · RETENTION DASHBOARD</span>
-<h1>은행 고객 이탈 리텐션 대시보드</h1>
-<div class="sub">XAI로 짚은 고위험 고객 → 이탈 요인 → 맞춤 리텐션 전략·LLM 이메일까지. 고객을 클릭해 상세 분석을 확인하세요.</div>
+<span class="badge">2026 신촌연합 데이터·AI 해커톤 · 16조</span>
+<h1>은행 고객 이탈 예측 — XAI 진단에서 리텐션 실행까지</h1>
+<div class="sub">고위험 고객을 예측하고(모델), 이탈 요인을 설명하며(SHAP), 반사실·ROI로 개입의 실현성을 검증한 뒤 맞춤 리텐션까지 잇는 팀 제출자료입니다.</div>
+<div class="kpis">
+ <div class="kpi"><div class="n">0.7312</div><div class="l">CV PR-AUC</div></div>
+ <div class="kpi"><div class="n">0.8895</div><div class="l">ROC-AUC</div></div>
+ <div class="kpi"><div class="n">59%</div><div class="l">상위 20% 접촉 시 이탈자 포착</div></div>
+ <div class="kpi"><div class="n">−26%p</div><div class="l">재활성화 시 이탈확률 ↓</div></div>
+</div>
 </header>
-<div class="kpis" id="kpis"></div>
-<div class="section-t">세그먼트별 이탈률</div>
-<div class="seg" id="seg"></div>
-<div class="section-t">고위험 고객 탐색기</div>
-<div class="chips" id="chips"></div>
-<div class="grid">
-  <div><div class="list" id="list"></div></div>
-  <div class="panel" id="panel"></div>
+
+<div class="section-t">제출 자료</div>
+<div class="cards">
+ <a class="card" href="dashboard.html">
+  <div class="ic">📊</div>
+  <div class="kind">Interactive Dashboard</div>
+  <h3>리텐션 대시보드</h3>
+  <p>XAI로 짚은 고위험 고객을 클릭해 이탈 요인(SHAP) → 맞춤 리텐션 전략 → LLM 이메일까지 확인하는 인터랙티브 탐색기.</p>
+  <div class="go">대시보드 열기 <span class="arr">→</span></div>
+ </a>
+ <a class="card" href="report.html">
+  <div class="ic">📄</div>
+  <div class="kind">Analysis Report</div>
+  <h3>XAI 심화 분석 리포트</h3>
+  <p>반사실(Counterfactual)·리텐션 ROI·전역 SHAP 견고성으로 “예측을 넘어” 개입의 효과와 실현성을 정량 검증한 근거 리포트.</p>
+  <div class="go">리포트 열기 <span class="arr">→</span></div>
+ </a>
 </div>
-<div class="foot">모델: CatBoost+LightGBM 앙상블 (CV PR-AUC 0.7310) · 설명: SHAP · 이 대시보드는 팀 분석 결과로 생성된 자체 완결형 자료입니다.</div>
+
+<div class="foot">
+모델: CatBoost·LightGBM·XGBoost 앙상블 · 설명: SHAP · 반사실/ROI는 제출 코드로 재현<br>
+2026 신촌연합 데이터·AI 해커톤 · 16조 — 소스: <a href="https://github.com/subin21cc/2026-sinchon-hackathon-team16">github.com/subin21cc/2026-sinchon-hackathon-team16</a>
 </div>
-<script>
-const DASH={"kpis": {"customers": 33007, "churn": 21.2, "high_risk": 5076, "lift20": 59}, "segments": [["상품 3개↑", 88], ["50대", 61], ["독일", 38], ["비활성", 30], ["여성", 28], ["전체", 21]], "archetypes": {"상품과다형": {"strategy": "통합 프리미엄 계좌·수수료 면제·전담 상품 점검"}, "중장년형": {"strategy": "생애주기 맞춤 상품(은퇴·자산관리)·중장년 우대·전담 상담"}, "독일형": {"strategy": "현지 경쟁 금리 대응·국가 맞춤 리텐션 캠페인"}, "비활성형": {"strategy": "앱 재활성화·자동이체 우대금리 +0.3%p·지점 상담"}, "복합형": {"strategy": "고위험 전담 리텐션·복합 요인 맞춤 오퍼"}}, "customers": [{"id": 134001, "prob": 0.988, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 43, "상품수": 3, "활성": "비활성", "잔고": "114,451"}, "drivers": [["상품수", 1.4], ["상품수구간", 1.06], ["나이", 0.6], ["나이×상품", 0.57], ["상품3개↑", 0.5]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 164747, "prob": 0.987, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "남성", "나이": 59, "상품수": 3, "활성": "비활성", "잔고": "154,872"}, "drivers": [["상품수", 1.35], ["나이", 1.19], ["상품수구간", 1.04], ["상품3개↑", 0.48], ["나이×상품", 0.39]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 138361, "prob": 0.987, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 50, "상품수": 3, "활성": "비활성", "잔고": "114,330"}, "drivers": [["상품수", 1.28], ["상품수구간", 1.02], ["나이", 1.02], ["국가", 0.45], ["상품3개↑", 0.45]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 23156, "prob": 0.987, "arche": "중장년형", "attrs": {"국가": "France", "성별": "여성", "나이": 56, "상품수": 3, "활성": "비활성", "잔고": "0"}, "drivers": [["나이", 1.67], ["상품수", 1.42], ["상품수구간", 1.09], ["상품3개↑", 0.52], ["활성×상품", 0.44]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n56세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 66570, "prob": 0.987, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 47, "상품수": 3, "활성": "비활성", "잔고": "104,887"}, "drivers": [["상품수", 1.37], ["상품수구간", 1.18], ["나이", 0.89], ["상품3개↑", 0.48], ["국가", 0.45]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 28105, "prob": 0.986, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 51, "상품수": 3, "활성": "비활성", "잔고": "104,774"}, "drivers": [["상품수", 1.29], ["나이", 1.06], ["상품수구간", 0.92], ["국가", 0.45], ["상품3개↑", 0.45]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 45807, "prob": 0.986, "arche": "상품과다형", "attrs": {"국가": "France", "성별": "여성", "나이": 57, "상품수": 3, "활성": "비활성", "잔고": "105,246"}, "drivers": [["상품수", 1.44], ["나이", 1.29], ["상품수구간", 0.9], ["상품3개↑", 0.51], ["나이×상품", 0.5]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 144961, "prob": 0.985, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "남성", "나이": 58, "상품수": 3, "활성": "비활성", "잔고": "155,423"}, "drivers": [["상품수", 1.34], ["나이", 1.33], ["상품수구간", 1.08], ["상품3개↑", 0.47], ["활성×상품", 0.42]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 71321, "prob": 0.985, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 55, "상품수": 3, "활성": "비활성", "잔고": "108,235"}, "drivers": [["상품수", 1.28], ["나이", 1.07], ["상품수구간", 0.91], ["국가", 0.46], ["상품3개↑", 0.44]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 120482, "prob": 0.985, "arche": "상품과다형", "attrs": {"국가": "France", "성별": "여성", "나이": 55, "상품수": 3, "활성": "비활성", "잔고": "153,657"}, "drivers": [["상품수", 1.44], ["나이", 1.1], ["상품수구간", 0.99], ["상품3개↑", 0.52], ["나이×상품", 0.45]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 131998, "prob": 0.984, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 49, "상품수": 3, "활성": "비활성", "잔고": "121,356"}, "drivers": [["상품수", 1.34], ["상품수구간", 1.04], ["나이", 0.95], ["상품3개↑", 0.45], ["국가", 0.42]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 97620, "prob": 0.984, "arche": "상품과다형", "attrs": {"국가": "France", "성별": "여성", "나이": 58, "상품수": 3, "활성": "비활성", "잔고": "166,777"}, "drivers": [["상품수", 1.44], ["나이", 1.25], ["상품수구간", 0.99], ["상품3개↑", 0.52], ["나이×상품", 0.46]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 126681, "prob": 0.983, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 47, "상품수": 3, "활성": "비활성", "잔고": "117,206"}, "drivers": [["상품수", 1.34], ["상품수구간", 1.12], ["나이", 0.94], ["상품3개↑", 0.48], ["국가", 0.46]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 100970, "prob": 0.983, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "남성", "나이": 60, "상품수": 3, "활성": "비활성", "잔고": "107,879"}, "drivers": [["상품수", 1.34], ["나이", 1.16], ["상품수구간", 0.94], ["상품3개↑", 0.46], ["활성×상품", 0.44]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 3개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 104749, "prob": 0.983, "arche": "상품과다형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 45, "상품수": 4, "활성": "비활성", "잔고": "118,773"}, "drivers": [["상품수", 1.37], ["상품수구간", 1.17], ["나이", 0.7], ["상품3개↑", 0.47], ["국가", 0.46]], "email": "제목: 여러 상품, 이제 하나로 더 똑똑하게\n고객님께서는 현재 4개 상품을 이용 중이십니다. '통합 프리미엄 계좌' 하나로 수수료 면제와 우대금리를 함께 누리세요. 전담 매니저가 무료로 점검해 드립니다."}, {"id": 84866, "prob": 0.979, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 56, "상품수": 1, "활성": "비활성", "잔고": "114,553"}, "drivers": [["나이", 2.17], ["국가", 0.71], ["활성×상품", 0.48], ["상품수구간", 0.36], ["활성회원", 0.31]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n56세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 73898, "prob": 0.976, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 56, "상품수": 1, "활성": "비활성", "잔고": "109,388"}, "drivers": [["나이", 2.19], ["국가", 0.68], ["활성×상품", 0.48], ["상품수구간", 0.35], ["활성회원", 0.31]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n56세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 8985, "prob": 0.976, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 54, "상품수": 1, "활성": "비활성", "잔고": "105,230"}, "drivers": [["나이", 1.94], ["국가", 0.71], ["활성×상품", 0.45], ["상품수구간", 0.35], ["잔고", 0.3]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n54세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 144924, "prob": 0.975, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 52, "상품수": 1, "활성": "비활성", "잔고": "110,943"}, "drivers": [["나이", 1.9], ["국가", 0.73], ["활성×상품", 0.44], ["상품수구간", 0.36], ["활성회원", 0.29]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n52세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 132477, "prob": 0.975, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 57, "상품수": 1, "활성": "비활성", "잔고": "118,794"}, "drivers": [["나이", 2.02], ["국가", 0.71], ["활성×상품", 0.49], ["상품수구간", 0.35], ["활성회원", 0.32]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n57세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 58949, "prob": 0.975, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 59, "상품수": 1, "활성": "비활성", "잔고": "107,926"}, "drivers": [["나이", 1.93], ["국가", 0.7], ["활성×상품", 0.49], ["상품수구간", 0.35], ["활성회원", 0.33]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n59세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 156559, "prob": 0.974, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 55, "상품수": 1, "활성": "비활성", "잔고": "103,034"}, "drivers": [["나이", 1.91], ["국가", 0.72], ["활성×상품", 0.46], ["상품수구간", 0.34], ["활성회원", 0.3]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n55세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 137491, "prob": 0.974, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 56, "상품수": 1, "활성": "비활성", "잔고": "118,241"}, "drivers": [["나이", 2.2], ["국가", 0.68], ["활성×상품", 0.48], ["상품수구간", 0.34], ["활성회원", 0.31]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n56세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 138152, "prob": 0.974, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 58, "상품수": 1, "활성": "비활성", "잔고": "113,736"}, "drivers": [["나이", 1.9], ["국가", 0.74], ["활성×상품", 0.51], ["활성회원", 0.34], ["상품수구간", 0.33]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n58세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 21236, "prob": 0.973, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 51, "상품수": 1, "활성": "비활성", "잔고": "105,760"}, "drivers": [["나이", 1.84], ["국가", 0.7], ["활성×상품", 0.43], ["상품수구간", 0.35], ["활성회원", 0.29]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n51세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 92931, "prob": 0.973, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 52, "상품수": 1, "활성": "비활성", "잔고": "115,074"}, "drivers": [["나이", 1.9], ["국가", 0.72], ["활성×상품", 0.45], ["상품수구간", 0.37], ["성별", 0.3]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n52세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 136464, "prob": 0.972, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 57, "상품수": 1, "활성": "비활성", "잔고": "109,730"}, "drivers": [["나이", 2.01], ["국가", 0.71], ["활성×상품", 0.49], ["상품수구간", 0.35], ["활성회원", 0.33]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n57세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 71816, "prob": 0.972, "arche": "중장년형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 57, "상품수": 1, "활성": "비활성", "잔고": "111,525"}, "drivers": [["나이", 1.96], ["국가", 0.72], ["활성×상품", 0.49], ["상품수구간", 0.37], ["활성회원", 0.32]], "email": "제목: 고객님의 다음 단계, 저희가 함께 준비합니다\n57세 고객님을 위한 은퇴·자산관리 맞춤 상품과 전담 상담을 제안드립니다. 우대금리와 생애주기 혜택을 지금 확인해 보세요."}, {"id": 163552, "prob": 0.848, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "114,513"}, "drivers": [["국가", 0.72], ["나이", 0.43], ["상품수구간", 0.38], ["활성×상품", 0.35], ["국가×성별", 0.32]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 62746, "prob": 0.842, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "109,472"}, "drivers": [["국가", 0.7], ["나이", 0.47], ["상품수구간", 0.4], ["활성×상품", 0.35], ["국가×성별", 0.31]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 163307, "prob": 0.84, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "104,469"}, "drivers": [["국가", 0.7], ["나이", 0.43], ["상품수구간", 0.41], ["활성×상품", 0.35], ["잔고", 0.33]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 58743, "prob": 0.837, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "102,645"}, "drivers": [["국가", 0.7], ["나이", 0.42], ["상품수구간", 0.35], ["활성×상품", 0.32], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 164486, "prob": 0.836, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "115,074"}, "drivers": [["국가", 0.72], ["나이", 0.42], ["상품수구간", 0.38], ["활성×상품", 0.35], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 83314, "prob": 0.824, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "116,498"}, "drivers": [["국가", 0.69], ["나이", 0.41], ["상품수구간", 0.36], ["활성×상품", 0.33], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 33901, "prob": 0.823, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "117,439"}, "drivers": [["국가", 0.7], ["나이", 0.43], ["상품수구간", 0.39], ["활성×상품", 0.35], ["성별", 0.31]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 146365, "prob": 0.814, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "122,448"}, "drivers": [["국가", 0.71], ["나이", 0.38], ["활성×상품", 0.36], ["상품수구간", 0.36], ["상품수", 0.29]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 7081, "prob": 0.808, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "121,526"}, "drivers": [["국가", 0.71], ["나이", 0.42], ["상품수구간", 0.4], ["활성×상품", 0.35], ["성별", 0.31]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 94247, "prob": 0.804, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 41, "상품수": 1, "활성": "비활성", "잔고": "104,823"}, "drivers": [["국가", 0.74], ["상품수구간", 0.37], ["활성×상품", 0.35], ["성별", 0.29], ["상품수", 0.29]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 14764, "prob": 0.803, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "127,104"}, "drivers": [["국가", 0.69], ["나이", 0.39], ["상품수구간", 0.34], ["활성×상품", 0.32], ["성별", 0.29]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 56938, "prob": 0.8, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 41, "상품수": 1, "활성": "비활성", "잔고": "111,729"}, "drivers": [["국가", 0.73], ["상품수구간", 0.38], ["활성×상품", 0.35], ["국가×성별", 0.33], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 25586, "prob": 0.795, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "129,969"}, "drivers": [["국가", 0.71], ["나이", 0.39], ["상품수구간", 0.38], ["활성×상품", 0.36], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 22324, "prob": 0.794, "arche": "독일형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 42, "상품수": 1, "활성": "비활성", "잔고": "121,899"}, "drivers": [["국가", 0.72], ["나이", 0.4], ["상품수구간", 0.39], ["활성×상품", 0.36], ["성별", 0.3]], "email": "제목: Germany 고객님을 위한 특별 우대 안내\n현지 최고 수준의 우대금리와 국가 맞춤 혜택을 준비했습니다. 경쟁사보다 나은 조건으로 계속 함께해 주세요."}, {"id": 133687, "prob": 0.56, "arche": "복합형", "attrs": {"국가": "France", "성별": "여성", "나이": 41, "상품수": 1, "활성": "비활성", "잔고": "154,436"}, "drivers": [["잔고", 0.47], ["활성×상품", 0.34], ["상품수", 0.3], ["성별", 0.3], ["상품수구간", 0.29]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 54777, "prob": 0.551, "arche": "복합형", "attrs": {"국가": "France", "성별": "여성", "나이": 38, "상품수": 1, "활성": "비활성", "잔고": "175,739"}, "drivers": [["잔고", 0.56], ["활성×상품", 0.35], ["상품수구간", 0.35], ["추정연봉", 0.35], ["성별", 0.29]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 9966, "prob": 0.539, "arche": "복합형", "attrs": {"국가": "France", "성별": "여성", "나이": 39, "상품수": 1, "활성": "비활성", "잔고": "127,358"}, "drivers": [["거래기간/나이", 0.33], ["활성×상품", 0.32], ["성별", 0.29], ["상품수구간", 0.28], ["국가", -0.25]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 89529, "prob": 0.534, "arche": "복합형", "attrs": {"국가": "Germany", "성별": "여성", "나이": 18, "상품수": 1, "활성": "활성", "잔고": "98,894"}, "drivers": [["나이×상품", 0.71], ["국가", 0.65], ["잔고/연봉", 0.61], ["나이", -0.53], ["활성×상품", -0.35]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 158515, "prob": 0.522, "arche": "복합형", "attrs": {"국가": "Germany", "성별": "남성", "나이": 32, "상품수": 1, "활성": "비활성", "잔고": "57,017"}, "drivers": [["잔고/연봉", 0.59], ["국가", 0.57], ["나이", -0.46], ["활성×상품", 0.38], ["상품수구간", 0.31]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 10751, "prob": 0.517, "arche": "복합형", "attrs": {"국가": "France", "성별": "여성", "나이": 37, "상품수": 1, "활성": "비활성", "잔고": "153,970"}, "drivers": [["추정연봉", 0.39], ["잔고", 0.34], ["활성×상품", 0.33], ["상품수구간", 0.29], ["성별", 0.28]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}, {"id": 95603, "prob": 0.502, "arche": "복합형", "attrs": {"국가": "France", "성별": "여성", "나이": 22, "상품수": 1, "활성": "비활성", "잔고": "0"}, "drivers": [["나이×상품", 0.61], ["나이", -0.6], ["상품수구간", 0.52], ["상품수", 0.42], ["성별", 0.32]], "email": "제목: 고객님을 위한 맞춤 리텐션 제안\n맞춤 우대 혜택을 준비했습니다. 전담 상담사가 곧 연락드리겠습니다."}]};
-const $=s=>document.querySelector(s);
-// KPIs
-$("#kpis").innerHTML=[
- [DASH.kpis.customers.toLocaleString(),"평가 고객 수",""],
- [DASH.kpis.churn+"%","전체 이탈률",""],
- [DASH.kpis.high_risk.toLocaleString(),"고위험 고객 (p>0.5)","alt"],
- [DASH.kpis.lift20+"%","상위 20% 접촉 시 포착","alt"]
-].map(k=>`<div class="kpi ${k[2]}"><div class="n">${k[0]}</div><div class="l">${k[1]}</div></div>`).join("");
-// segments
-const mx=Math.max(...DASH.segments.map(s=>s[1]));
-$("#seg").innerHTML=DASH.segments.map(s=>`<div class="segrow"><div class="lab">${s[0]}</div><div class="bar"><div class="fill" style="width:${s[1]/mx*100}%"></div></div><div class="v">${s[1]}%</div></div>`).join("");
-// chips
-const arches=[...new Set(DASH.customers.map(c=>c.arche))];
-let filter="전체";
-function renderChips(){
- $("#chips").innerHTML=["전체",...arches].map(a=>`<div class="chip ${a===filter?'on':''}" data-a="${a}">${a}${a==="전체"?"":" ("+DASH.customers.filter(c=>c.arche===a).length+")"}</div>`).join("");
- document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{filter=c.dataset.a;renderChips();renderList();});
-}
-function renderList(){
- const cs=DASH.customers.filter(c=>filter==="전체"||c.arche===filter);
- $("#list").innerHTML=cs.map((c,i)=>`<div class="cust" data-id="${c.id}"><div class="idc">#${c.id}</div><span class="tag">${c.arche}</span><div class="meta">${c.attrs.국가} · ${c.attrs.나이}세 · 상품${c.attrs.상품수} · ${c.attrs.활성}</div><div class="risk">${Math.round(c.prob*100)}%</div></div>`).join("");
- document.querySelectorAll(".cust").forEach(el=>el.onclick=()=>{document.querySelectorAll(".cust").forEach(x=>x.classList.remove("on"));el.classList.add("on");renderPanel(cs.find(c=>c.id==el.dataset.id));});
- if(cs.length){document.querySelector(".cust").classList.add("on");renderPanel(cs[0]);}
-}
-function renderPanel(c){
- const dmax=Math.max(...c.drivers.map(d=>Math.abs(d[1])));
- const bars=c.drivers.map(d=>{const w=Math.abs(d[1])/dmax*50;const side=d[1]>=0?`<div class="pos" style="width:${w}%"></div>`:`<div class="neg" style="width:${w}%"></div>`;return `<div class="r"><div class="f">${d[0]}</div><div class="track"><div class="mid"></div>${side}</div></div>`}).join("");
- const attrs=Object.entries(c.attrs).map(([k,v])=>`<div class="attr"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
- const em=c.email.replace(/^제목: (.*)$/m,'<b>제목: $1</b>');
- $("#panel").innerHTML=`<span class="ptag">${c.arche}</span><h3>고객 #${c.id} · 이탈확률 ${Math.round(c.prob*100)}%</h3>
- <div class="blk">고객 프로파일</div><div class="attrs">${attrs}</div>
- <div class="blk">이탈 요인 (SHAP · 빨강=위험↑, 파랑=방어)</div><div class="shap">${bars}</div>
- <div class="blk">추천 리텐션 전략</div><div class="strat">${DASH.archetypes[c.arche].strategy}</div>
- <div class="blk">LLM 맞춤 리텐션 이메일</div><div class="mail">${em}</div>`;
-}
-renderChips();renderList();
-</script></body></html>
+</div></body></html>
